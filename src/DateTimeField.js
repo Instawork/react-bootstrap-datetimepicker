@@ -14,6 +14,7 @@ export default class DateTimeField extends Component {
     size: Constants.SIZE_MEDIUM,
     mode: Constants.MODE_DATETIME,
     zIndex: 999,
+    stepping: 1,
     onChange: (x) => {
       console.log(x);
     }
@@ -48,6 +49,7 @@ export default class DateTimeField extends Component {
     showToday: PropTypes.bool,
     viewMode: PropTypes.string,
     zIndex: PropTypes.number,
+    stepping: PropTypes.number,
     size: PropTypes.oneOf([Constants.SIZE_SMALL, Constants.SIZE_MEDIUM, Constants.SIZE_LARGE]),
     daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.number)
   }
@@ -163,7 +165,7 @@ export default class DateTimeField extends Component {
 
   addMinute = () => {
     return this.setState({
-      selectedDate: this.state.selectedDate.clone().add(1, "minutes")
+      selectedDate: this.state.selectedDate.clone().add(this.props.stepping, "minutes")
     }, function() {
       this.props.onChange(this.state.selectedDate.format(this.props.format));
       return this.setState({
@@ -203,7 +205,7 @@ export default class DateTimeField extends Component {
 
   subtractMinute = () => {
     return this.setState({
-      selectedDate: this.state.selectedDate.clone().subtract(1, "minutes")
+      selectedDate: this.state.selectedDate.clone().subtract(this.props.stepping, "minutes")
     }, () => {
       this.props.onChange(this.state.selectedDate.format(this.props.format));
       return this.setState({
